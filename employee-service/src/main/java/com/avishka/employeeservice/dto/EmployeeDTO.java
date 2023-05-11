@@ -25,4 +25,7 @@ public class EmployeeDTO {
     @Email(message = "Please provide a valid email")
     private String email;
 
+    @NotEmpty(message = "Please provide a department code")
+    private String departmentCode;
+
 }

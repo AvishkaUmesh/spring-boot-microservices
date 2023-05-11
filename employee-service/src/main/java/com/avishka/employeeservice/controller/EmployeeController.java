@@ -1,5 +1,6 @@
 package com.avishka.employeeservice.controller;
 
+import com.avishka.employeeservice.dto.APIResponseDTO;
 import com.avishka.employeeservice.dto.EmployeeDTO;
 import com.avishka.employeeservice.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<APIResponseDTO> getEmployeeById(@PathVariable Long id) {
         return new ResponseEntity<>(employeeService.getEmployeeById(id), HttpStatus.OK);
     }
 
