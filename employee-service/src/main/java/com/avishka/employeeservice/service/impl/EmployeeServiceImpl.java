@@ -8,10 +8,10 @@ import com.avishka.employeeservice.exception.EmailAlreadyExistException;
 import com.avishka.employeeservice.exception.ResourceNotFoundException;
 import com.avishka.employeeservice.mapper.EmployeeMapper;
 import com.avishka.employeeservice.repository.EmployeeRepository;
+import com.avishka.employeeservice.service.APIClient;
 import com.avishka.employeeservice.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Optional;
 
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
-    private WebClient webClient;
+    private APIClient apiClient;
 
     @Override
     public EmployeeDTO save(EmployeeDTO employeeDTO) {
@@ -45,11 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 () -> new ResourceNotFoundException("Employee", "id", id)
         );
 
-        DepartmentDTO departmentDTO = webClient.get()
-                .uri("http://localhost:8080/api/departments/" + employee.getDepartmentCode())
-                .retrieve()
-                .bodyToMono(DepartmentDTO.class)
-                .block();
+        DepartmentDTO departmentDTO = apiClient.getDepartmentByCode(employee.getDepartmentCode());
 
         APIResponseDTO apiResponseDTO = new APIResponseDTO();
         apiResponseDTO.setDepartment(departmentDTO);
