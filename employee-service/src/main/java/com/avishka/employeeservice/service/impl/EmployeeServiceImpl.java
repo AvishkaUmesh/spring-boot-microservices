@@ -56,6 +56,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         apiResponseDTO.setEmployee(EmployeeMapper.MAPPER.employeeToEmployeeDTO(employee));
 
         return apiResponseDTO;
-//        return EmployeeMapper.MAPPER.employeeToEmployeeDTO(employee);
     }
 }
