@@ -3,6 +3,7 @@ package com.avishka.employeeservice.service.impl;
 import com.avishka.employeeservice.dto.APIResponseDTO;
 import com.avishka.employeeservice.dto.DepartmentDTO;
 import com.avishka.employeeservice.dto.EmployeeDTO;
+import com.avishka.employeeservice.dto.OrganizationDTO;
 import com.avishka.employeeservice.entity.Employee;
 import com.avishka.employeeservice.exception.EmailAlreadyExistException;
 import com.avishka.employeeservice.exception.ResourceNotFoundException;
@@ -62,8 +63,15 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .bodyToMono(DepartmentDTO.class)
                 .block();
 
+        OrganizationDTO organizationDTO = webClient.get()
+                .uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+                .retrieve()
+                .bodyToMono(OrganizationDTO.class)
+                .block();
+
         APIResponseDTO apiResponseDTO = new APIResponseDTO();
         apiResponseDTO.setDepartment(departmentDTO);
+        apiResponseDTO.setOrganization(organizationDTO);
         apiResponseDTO.setEmployee(EmployeeMapper.MAPPER.employeeToEmployeeDTO(employee));
 
         return apiResponseDTO;

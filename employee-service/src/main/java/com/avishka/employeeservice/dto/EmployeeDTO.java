@@ -28,4 +28,7 @@ public class EmployeeDTO {
     @NotEmpty(message = "Please provide a department code")
     private String departmentCode;
 
+    @NotEmpty(message = "Please provide an organization code")
+    private String organizationCode;
+
 }
